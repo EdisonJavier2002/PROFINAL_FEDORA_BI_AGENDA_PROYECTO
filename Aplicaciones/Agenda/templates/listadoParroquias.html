@@ -1,0 +1,39 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Parroquias</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevaParroquia' %}" class="btn btn-success">Agregar Parroquia</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-parroquias">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for parroquia in parroquias %}
+                <tr>
+                    <td>{{ parroquia.codigo_par }}</td>
+                    <td>{{ parroquia.nombre_par }}</td>
+                    <td>
+                        <a href="{% url 'editarParroquia' parroquia.codigo_par %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarParroquia' parroquia.codigo_par %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-parroquias');
+        </script>
+    </div>
+</div>
+{% endblock %}

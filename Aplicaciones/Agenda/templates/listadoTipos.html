@@ -1,0 +1,41 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Tipos</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevoTipo' %}" class="btn btn-success">Agregar Tipo</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-tipos">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Color</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tipo in tipos %}
+                <tr>
+                    <td>{{ tipo.codigo_tip }}</td>
+                    <td>{{ tipo.nombre_tip }}</td>
+                    <td>{{ tipo.color_tip }}</td>
+                    <td>
+                        <a href="{% url 'editarTipo' tipo.codigo_tip %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarTipo' tipo.codigo_tip %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-tipos');
+        </script>
+    </div>
+</div>
+{% endblock %}

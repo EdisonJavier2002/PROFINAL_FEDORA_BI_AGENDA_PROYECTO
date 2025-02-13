@@ -1,0 +1,51 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Delegado</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarDelegadoForm" action="{% url 'procesarActualizacionDelegado' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_del" value="{{ delegadoEditar.codigo_del }}">
+                
+                <label><b>Evento:</b></label>
+                <select name="codigo_eve" class="form-control" required>
+                    <option value="">Seleccione un evento</option>
+                    {% for evento in eventos %}
+                        <option value="{{ evento.codigo_eve }}" {% if evento.codigo_eve == delegadoEditar.codigo_eve.codigo_eve %}selected{% endif %}>
+                            {{ evento.nombre_eve }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <label><b>Usuario:</b></label>
+                <select name="codigo_usu" class="form-control" required>
+                    <option value="">Seleccione un usuario</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.codigo_usu }}" {% if usuario.codigo_usu == delegadoEditar.codigo_usu.codigo_usu %}selected{% endif %}>
+                            {{ usuario.nombre_usu }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoDelegados' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarDelegadoForm').addEventListener('submit', function(event) {
+        let evento = document.getElementsByName('codigo_eve')[0].value;
+        let usuario = document.getElementsByName('codigo_usu')[0].value;
+
+        if (!evento || !usuario) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

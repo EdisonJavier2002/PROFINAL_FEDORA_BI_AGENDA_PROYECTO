@@ -1,0 +1,39 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Años</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevoAnio' %}" class="btn btn-success">Agregar Año</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-anios">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for anio in anios %}
+                <tr>
+                    <td>{{ anio.codigo_ani }}</td>
+                    <td>{{ anio.nombre_ani }}</td>
+                    <td>
+                        <a href="{% url 'editarAnio' anio.codigo_ani %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarAnio' anio.codigo_ani %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-anios');
+        </script>
+    </div>
+</div>
+{% endblock %}

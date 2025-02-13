@@ -1,0 +1,55 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form action="{% url 'guardarUsuario' %}" method="post" id="frm_nuevo_usuario">
+                {% csrf_token %}
+                <label for=""><b>Nombre:</b></label>
+                <input type="text" name="nombre_usu" class="form-control" id="nombre" placeholder="Ingrese el nombre del usuario" required>
+                <br>
+                <label for=""><b>Email:</b></label>
+                <input type="email" name="email_usu" class="form-control" id="email" placeholder="Ingrese el email" required>
+                <br>
+                <label for=""><b>Perfil:</b></label>
+                <input type="text" name="perfil_usu" class="form-control" id="perfil" placeholder="Ingrese el perfil" required>
+                <br>
+                <label for=""><b>Estado:</b></label>
+                <select name="estado_usu" class="form-control" id="estado" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <br>
+                <label for=""><b>Delegado:</b></label>
+                <select name="es_delegado" class="form-control" id="delegado" required>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoUsuarios' %}" class="btn btn-secondary">Cancelar</a>
+            </form>            
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<script>
+    $("#frm_nuevo_usuario").validate({
+        rules: {
+            nombre_usu: { required: true, minlength: 3, maxlength: 100 },
+            email_usu: { required: true, email: true },
+            perfil_usu: { required: true },
+            estado_usu: { required: true },
+            es_delegado: { required: true }
+        },
+        messages: {
+            nombre_usu: { required: "Por favor ingrese el nombre del usuario", minlength: "El nombre debe tener al menos 3 caracteres" },
+            email_usu: { required: "Por favor ingrese el email", email: "Por favor ingrese un email válido" },
+            perfil_usu: { required: "Por favor ingrese el perfil del usuario" },
+            estado_usu: { required: "Por favor ingrese el estado del usuario" },
+            es_delegado: { required: "Por favor indique si es delegado" }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Objetivos de Desarrollo</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevoObjetivoDesarrollo' %}" class="btn btn-success">Agregar Objetivo de Desarrollo</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Descripción</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objetivo in objetivos %}
+                <tr>
+                    <td>{{ objetivo.codigo_od }}</td>
+                    <td>{{ objetivo.descripcion_od }}</td>
+                    <td>
+                        <a href="{% url 'editarObjetivoDesarrollo' objetivo.codigo_od %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarObjetivoDesarrollo' objetivo.codigo_od %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

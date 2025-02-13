@@ -1,0 +1,36 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="{% url 'guardarNotificacion' %}" method="post" id="frm_nueva_notificacion">
+                {% csrf_token %}
+                <label><b>Mensaje:</b></label>
+                <textarea name="mensaje_not" class="form-control" required></textarea>
+                
+                <label><b>Emisor:</b></label>
+                <input type="number" name="emisor_not" class="form-control" required>
+
+                <label><b>Receptor:</b></label>
+                <input type="number" name="receptor_not" class="form-control" required>
+                
+                <label><b>Estado:</b></label>
+                <input type="number" name="estado_not" class="form-control" required>
+                
+                <label><b>Fecha:</b></label>
+                <input type="datetime-local" name="fecha_not" class="form-control" required>
+                
+                <label><b>Código Evento:</b></label>
+                <input type="number" name="codigo_eve" class="form-control" required>
+                
+                <label><b>Push Notificación:</b></label>
+                <input type="number" name="push_not" class="form-control" required>
+                
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoNotificaciones' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

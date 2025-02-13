@@ -1,0 +1,59 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form action="{% url 'guardarPoa' %}" method="post" id="frm_nuevo_poa">
+                {% csrf_token %}
+                <label for=""><b>Año:</b></label>
+                <input type="text" name="anio_poa" class="form-control" placeholder="Ingrese el año del POA" required>
+                <br>
+                <label for=""><b>Descripción:</b></label>
+                <input type="text" name="descripcion_poa" class="form-control" placeholder="Ingrese la descripción" required>
+                <br>
+                <label for=""><b>Código Dirección:</b></label>
+                <input type="number" name="codigo_dir" class="form-control" placeholder="Ingrese el código de dirección" required>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoPoa' %}" class="btn btn-secondary">Cancelar</a>
+            </form>            
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<script>
+    $("#frm_nuevo_poa").validate({
+        rules: {
+            anio_poa: {
+                required: true,
+                minlength: 4,
+                maxlength: 4
+            },
+            descripcion_poa: {
+                required: true,
+                minlength: 3,
+                maxlength: 255
+            },
+            codigo_dir: {
+                required: true
+            }
+        },
+        messages: {
+            anio_poa: {
+                required: "Por favor ingrese el año",
+                minlength: "El año debe tener 4 caracteres",
+                maxlength: "El año debe tener 4 caracteres"
+            },
+            descripcion_poa: {
+                required: "Por favor ingrese la descripción",
+                minlength: "La descripción debe tener al menos 3 caracteres",
+                maxlength: "Máximo 255 caracteres"
+            },
+            codigo_dir: {
+                required: "Por favor ingrese el código de dirección"
+            }
+        }
+    });
+</script>
+{% endblock %}

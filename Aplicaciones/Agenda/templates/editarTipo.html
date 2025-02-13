@@ -1,0 +1,37 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Tipo</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarTipoForm" action="{% url 'procesarActualizacionTipo' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_tip" value="{{ tipoEditar.codigo_tip }}">
+                
+                <label><b>Nombre:</b></label>
+                <input type="text" name="nombre_tip" value="{{ tipoEditar.nombre_tip }}" class="form-control" required>
+                
+                <label><b>Color:</b></label>
+                <input type="text" name="color_tip" value="{{ tipoEditar.color_tip }}" class="form-control" required>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoTipos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarTipoForm').addEventListener('submit', function(event) {
+        let nombre = document.getElementsByName('nombre_tip')[0].value.trim();
+        let color = document.getElementsByName('color_tip')[0].value.trim();
+
+        if (!nombre || !color) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

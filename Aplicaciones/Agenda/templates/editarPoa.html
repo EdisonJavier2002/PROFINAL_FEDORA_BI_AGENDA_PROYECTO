@@ -1,0 +1,41 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar POA</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarPoaForm" action="{% url 'procesarActualizacionPoa' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_poa" value="{{ poaEditar.codigo_poa }}">
+                
+                <label><b>Año:</b></label>
+                <input type="text" name="anio_poa" value="{{ poaEditar.anio_poa }}" class="form-control" required>
+                
+                <label><b>Descripción:</b></label>
+                <input type="text" name="descripcion_poa" value="{{ poaEditar.descripcion_poa }}" class="form-control" required>
+                
+                <label><b>Código Dirección:</b></label>
+                <input type="number" name="codigo_dir" value="{{ poaEditar.codigo_dir }}" class="form-control" required>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoPoa' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarPoaForm').addEventListener('submit', function(event) {
+        let anio = document.getElementsByName('anio_poa')[0].value.trim();
+        let descripcion = document.getElementsByName('descripcion_poa')[0].value.trim();
+        let codigo = document.getElementsByName('codigo_dir')[0].value.trim();
+
+        if (!anio || !descripcion || !codigo) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Unidad</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarUnidadForm" action="{% url 'procesarActualizacionUnidad' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_uni" value="{{ unidadEditar.codigo_uni }}">
+                
+                <label><b>Nombre:</b></label>
+                <input type="text" name="nombre_uni" value="{{ unidadEditar.nombre_uni }}" class="form-control" required>
+                
+                <label><b>Código Dirección:</b></label>
+                <input type="number" name="codigo_dir" value="{{ unidadEditar.codigo_dir }}" class="form-control" required>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoUnidades' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarUnidadForm').addEventListener('submit', function(event) {
+        let nombre = document.getElementsByName('nombre_uni')[0].value.trim();
+        let codigo_dir = document.getElementsByName('codigo_dir')[0].value.trim();
+
+        if (!nombre || !codigo_dir) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

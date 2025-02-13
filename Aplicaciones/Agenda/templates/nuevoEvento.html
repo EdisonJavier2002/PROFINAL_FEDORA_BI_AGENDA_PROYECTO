@@ -1,0 +1,104 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br> <br> <br> <br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form action="{% url 'guardarEvento' %}" method="post" id="frm_nuevo_evento">
+                {% csrf_token %}
+                <label for=""><b>Proyecto:</b></label>
+                <select name="codigo_pro" class="form-control" required>
+                    <option value="">Seleccione un proyecto</option>
+                    {% for proyecto in proyectos %}
+                        <option value="{{ proyecto.codigo_pro }}">{{ proyecto.nombre_pro }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Tipo:</b></label>
+                <select name="codigo_tip" class="form-control" required>
+                    <option value="">Seleccione un tipo</option>
+                    {% for tipo in tipos %}
+                        <option value="{{ tipo.codigo_tip }}">{{ tipo.nombre_tip }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Prioridad:</b></label>
+                <select name="codigo_pri" class="form-control" required>
+                    <option value="">Seleccione una prioridad</option>
+                    {% for prioridad in prioridades %}
+                        <option value="{{ prioridad.codigo_pri }}">{{ prioridad.nombre_pri }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Parroquia:</b></label>
+                <select name="codigo_par" class="form-control" required>
+                    <option value="">Seleccione una parroquia</option>
+                    {% for parroquia in parroquias %}
+                        <option value="{{ parroquia.codigo_par }}">{{ parroquia.nombre_par }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Usuario:</b></label>
+                <select name="codigo_usu" class="form-control" required>
+                    <option value="">Seleccione un usuario</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.codigo_usu }}">{{ usuario.nombre_usu }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Estado:</b></label>
+                <input type="text" name="estado_eve" class="form-control" required>
+                <br>
+                <label for=""><b>Actividad:</b></label>
+                <textarea name="actividad_eve" class="form-control" required></textarea>
+                <br>
+                <label for=""><b>Fecha:</b></label>
+                <input type="datetime-local" name="fecha_eve" class="form-control" required>
+                <br>
+                <label for=""><b>Número de Participantes:</b></label>
+                <input type="number" name="numero_participantes_eve" class="form-control" required>
+                <br>
+                <label for=""><b>Duración (minutos):</b></label>
+                <input type="number" name="duracion_minutos_eve" class="form-control" required>
+                <br>
+                <label for=""><b>Lugar:</b></label>
+                <input type="text" name="lugar_eve" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoEventos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>            
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<script>
+    $("#frm_nuevo_evento").validate({
+        rules: {
+            codigo_pro: { required: true },
+            codigo_tip: { required: true },
+            codigo_pri: { required: true },
+            codigo_par: { required: true },
+            codigo_usu: { required: true },
+            estado_eve: { required: true },
+            actividad_eve: { required: true },
+            fecha_eve: { required: true },
+            numero_participantes_eve: { required: true, min: 1 },
+            duracion_minutos_eve: { required: true, min: 1 },
+            lugar_eve: { required: true }
+        },
+        messages: {
+            codigo_pro: { required: "Por favor seleccione un proyecto" },
+            codigo_tip: { required: "Por favor seleccione un tipo" },
+            codigo_pri: { required: "Por favor seleccione una prioridad" },
+            codigo_par: { required: "Por favor seleccione una parroquia" },
+            codigo_usu: { required: "Por favor seleccione un usuario" },
+            estado_eve: { required: "Por favor ingrese el estado" },
+            actividad_eve: { required: "Por favor ingrese la actividad" },
+            fecha_eve: { required: "Por favor ingrese la fecha" },
+            numero_participantes_eve: { required: "Por favor ingrese el número de participantes", min: "Debe haber al menos 1 participante" },
+            duracion_minutos_eve: { required: "Por favor ingrese la duración", min: "La duración debe ser al menos 1 minuto" },
+            lugar_eve: { required: "Por favor ingrese el lugar" }
+        }
+    });
+</script>
+{% endblock %}

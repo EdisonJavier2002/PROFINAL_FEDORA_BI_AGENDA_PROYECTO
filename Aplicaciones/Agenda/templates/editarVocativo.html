@@ -1,0 +1,56 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Vocativo</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarVocativoForm" action="{% url 'procesarActualizacionVocativo' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_voc" value="{{ vocativoEditar.codigo_voc }}">
+                
+                <label><b>Apellido:</b></label>
+                <input type="text" name="apellido_voc" value="{{ vocativoEditar.apellido_voc }}" class="form-control" required>
+                
+                <label><b>Nombre:</b></label>
+                <input type="text" name="nombre_voc" value="{{ vocativoEditar.nombre_voc }}" class="form-control" required>
+                
+                <label><b>Cargo:</b></label>
+                <input type="text" name="cargo_voc" value="{{ vocativoEditar.cargo_voc }}" class="form-control" required>
+                
+                <label><b>Teléfono:</b></label>
+                <input type="text" name="telefono_voc" value="{{ vocativoEditar.telefono_voc }}" class="form-control" required>
+                
+                <label><b>Evento:</b></label>
+                <select name="codigo_eve" class="form-control" required>
+                    <option value="">Seleccione un evento</option>
+                    {% for evento in eventos %}
+                        <option value="{{ evento.codigo_eve }}" {% if evento.codigo_eve == vocativoEditar.codigo_eve.codigo_eve %}selected{% endif %}>
+                            {{ evento.nombre_eve }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoVocativos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarVocativoForm').addEventListener('submit', function(event) {
+        let apellido = document.getElementsByName('apellido_voc')[0].value.trim();
+        let nombre = document.getElementsByName('nombre_voc')[0].value.trim();
+        let cargo = document.getElementsByName('cargo_voc')[0].value.trim();
+        let telefono = document.getElementsByName('telefono_voc')[0].value.trim();
+        let evento = document.getElementsByName('codigo_eve')[0].value;
+
+        if (!apellido || !nombre || !cargo || !telefono || !evento) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

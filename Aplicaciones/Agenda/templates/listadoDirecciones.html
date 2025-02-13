@@ -1,0 +1,41 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Direcciones</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevaDireccion' %}" class="btn btn-success">Agregar Dirección</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-direcciones">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Nombre</td>
+                    <td>Color</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for direccion in direcciones %}
+                <tr>
+                    <td>{{ direccion.codigo_dir }}</td>
+                    <td>{{ direccion.nombre_dir }}</td>
+                    <td>{{ direccion.color_dir }}</td>
+                    <td>
+                        <a href="{% url 'editarDireccion' direccion.codigo_dir %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarDireccion' direccion.codigo_dir %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-direcciones');
+        </script>
+    </div>
+</div>
+{% endblock %}

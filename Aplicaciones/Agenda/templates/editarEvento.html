@@ -1,0 +1,107 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Evento</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarEventoForm" action="{% url 'procesarActualizacionEvento' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_eve" value="{{ eventoEditar.codigo_eve }}">
+                
+                <label><b>Proyecto:</b></label>
+                <select name="codigo_pro" class="form-control" required>
+                    <option value="">Seleccione un proyecto</option>
+                    {% for proyecto in proyectos %}
+                        <option value="{{ proyecto.codigo_pro }}" {% if proyecto.codigo_pro == eventoEditar.codigo_pro.codigo_pro %}selected{% endif %}>
+                            {{ proyecto.nombre_pro }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label><b>Tipo:</b></label>
+                <select name="codigo_tip" class="form-control" required>
+                    <option value="">Seleccione un tipo</option>
+                    {% for tipo in tipos %}
+                        <option value="{{ tipo.codigo_tip }}" {% if tipo.codigo_tip == eventoEditar.codigo_tip.codigo_tip %}selected{% endif %}>
+                            {{ tipo.nombre_tip }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label><b>Prioridad:</b></label>
+                <select name="codigo_pri" class="form-control" required>
+                    <option value="">Seleccione una prioridad</option>
+                    {% for prioridad in prioridades %}
+                        <option value="{{ prioridad.codigo_pri }}" {% if prioridad.codigo_pri == eventoEditar.codigo_pri.codigo_pri %}selected{% endif %}>
+                            {{ prioridad.nombre_pri }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label><b>Parroquia:</b></label>
+                <select name="codigo_par" class="form-control" required>
+                    <option value="">Seleccione una parroquia</option>
+                    {% for parroquia in parroquias %}
+                        <option value="{{ parroquia.codigo_par }}" {% if parroquia.codigo_par == eventoEditar.codigo_par.codigo_par %}selected{% endif %}>
+                            {{ parroquia.nombre_par }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label><b>Usuario:</b></label>
+                <select name="codigo_usu" class="form-control" required>
+                    <option value="">Seleccione un usuario</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.codigo_usu }}" {% if usuario.codigo_usu == eventoEditar.codigo_usu.codigo_usu %}selected{% endif %}>
+                            {{ usuario.nombre_usu }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label><b>Estado:</b></label>
+                <input type="text" name="estado_eve" value="{{ eventoEditar.estado_eve }}" class="form-control" required>
+                <br>
+                <label><b>Actividad:</b></label>
+                <textarea name="actividad_eve" class="form-control" required>{{ eventoEditar.actividad_eve }}</textarea>
+                <br>
+                <label><b>Fecha:</b></label>
+                <input type="datetime-local" name="fecha_eve" value="{{ eventoEditar.fecha_eve|date:'Y-m-d\TH:i' }}" class="form-control" required>
+                <br>
+                <label><b>Número de Participantes:</b></label>
+                <input type="number" name="numero_participantes_eve" value="{{ eventoEditar.numero_participantes_eve }}" class="form-control" required>
+                <br>
+                <label><b>Duración (minutos):</b></label>
+                <input type="number" name="duracion_minutos_eve" value="{{ eventoEditar.duracion_minutos_eve }}" class="form-control" required>
+                <br>
+                <label><b>Lugar:</b></label>
+                <input type="text" name="lugar_eve" value="{{ eventoEditar.lugar_eve }}" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoEventos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarEventoForm').addEventListener('submit', function(event) {
+        let codigo_pro = document.getElementsByName('codigo_pro')[0].value;
+        let codigo_tip = document.getElementsByName('codigo_tip')[0].value;
+        let codigo_pri = document.getElementsByName('codigo_pri')[0].value;
+        let codigo_par = document.getElementsByName('codigo_par')[0].value;
+        let codigo_usu = document.getElementsByName('codigo_usu')[0].value;
+        let estado_eve = document.getElementsByName('estado_eve')[0].value.trim();
+        let actividad_eve = document.getElementsByName('actividad_eve')[0].value.trim();
+        let fecha_eve = document.getElementsByName('fecha_eve')[0].value.trim();
+        let numero_participantes_eve = document.getElementsByName('numero_participantes_eve')[0].value.trim();
+        let duracion_minutos_eve = document.getElementsByName('duracion_minutos_eve')[0].value.trim();
+        let lugar_eve = document.getElementsByName('lugar_eve')[0].value.trim();
+
+        if (!codigo_pro || !codigo_tip || !codigo_pri || !codigo_par || !codigo_usu || !estado_eve || !actividad_eve || !fecha_eve || !numero_participantes_eve || !duracion_minutos_eve || !lugar_eve) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

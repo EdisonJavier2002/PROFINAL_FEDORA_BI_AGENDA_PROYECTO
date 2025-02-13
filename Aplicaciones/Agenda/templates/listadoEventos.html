@@ -1,0 +1,59 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Eventos</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevoEvento' %}" class="btn btn-success">Agregar Evento</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-eventos">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Proyecto</td>
+                    <td>Tipo</td>
+                    <td>Prioridad</td>
+                    <td>Parroquia</td>
+                    <td>Usuario</td>
+                    <td>Estado</td>
+                    <td>Actividad</td>
+                    <td>Fecha</td>
+                    <td>Participantes</td>
+                    <td>Duración (min)</td>
+                    <td>Lugar</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in eventos %}
+                <tr>
+                    <td>{{ evento.codigo_eve }}</td>
+                    <td>{{ evento.codigo_pro.nombre_pro }}</td>
+                    <td>{{ evento.codigo_tip.nombre_tip }}</td>
+                    <td>{{ evento.codigo_pri.nombre_pri }}</td>
+                    <td>{{ evento.codigo_par.nombre_par }}</td>
+                    <td>{{ evento.codigo_usu.nombre_usu }}</td>
+                    <td>{{ evento.estado_eve }}</td>
+                    <td>{{ evento.actividad_eve }}</td>
+                    <td>{{ evento.fecha_eve }}</td>
+                    <td>{{ evento.numero_participantes_eve }}</td>
+                    <td>{{ evento.duracion_minutos_eve }}</td>
+                    <td>{{ evento.lugar_eve }}</td>
+                    <td>
+                        <a href="{% url 'editarEvento' evento.codigo_eve %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarEvento' evento.codigo_eve %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-eventos');
+        </script>
+    </div>
+</div>
+{% endblock %}

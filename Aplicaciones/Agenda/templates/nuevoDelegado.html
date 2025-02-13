@@ -1,0 +1,52 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br> <br> <br> <br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form action="{% url 'guardarDelegado' %}" method="post" id="frm_nuevo_delegado">
+                {% csrf_token %}
+                <label for=""><b>Evento:</b></label>
+                <select name="codigo_eve" class="form-control" id="evento" required>
+                    <option value="">Seleccione un evento</option>
+                    {% for evento in eventos %}
+                        <option value="{{ evento.codigo_eve }}">{{ evento.nombre_eve }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for=""><b>Usuario:</b></label>
+                <select name="codigo_usu" class="form-control" id="usuario" required>
+                    <option value="">Seleccione un usuario</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.codigo_usu }}">{{ usuario.nombre_usu }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoDelegados' %}" class="btn btn-secondary">Cancelar</a>
+            </form>            
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<script>
+    $("#frm_nuevo_delegado").validate({
+        rules: {
+            codigo_eve: {
+                required: true
+            },
+            codigo_usu: {
+                required: true
+            }
+        },
+        messages: {
+            codigo_eve: {
+                required: "Por favor seleccione un evento"
+            },
+            codigo_usu: {
+                required: "Por favor seleccione un usuario"
+            }
+        }
+    });
+</script>
+{% endblock %}

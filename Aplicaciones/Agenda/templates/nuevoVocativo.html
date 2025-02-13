@@ -1,0 +1,90 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br> <br> <br> <br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form action="{% url 'guardarVocativo' %}" method="post" id="frm_nuevo_vocativo">
+                {% csrf_token %}
+                <label for=""><b>Apellido:</b></label>
+                <input type="text" name="apellido_voc" class="form-control" id="apellido" placeholder="Ingrese el apellido" required>
+                <br>
+                <label for=""><b>Nombre:</b></label>
+                <input type="text" name="nombre_voc" class="form-control" id="nombre" placeholder="Ingrese el nombre" required>
+                <br>
+                <label for=""><b>Cargo:</b></label>
+                <input type="text" name="cargo_voc" class="form-control" id="cargo" placeholder="Ingrese el cargo" required>
+                <br>
+                <label for=""><b>Teléfono:</b></label>
+                <input type="text" name="telefono_voc" class="form-control" id="telefono" placeholder="Ingrese el teléfono" required>
+                <br>
+                <label for=""><b>Evento:</b></label>
+                <select name="codigo_eve" class="form-control" id="evento" required>
+                    <option value="">Seleccione un evento</option>
+                    {% for evento in eventos %}
+                        <option value="{{ evento.codigo_eve }}">{{ evento.nombre_eve }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'listadoVocativos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>            
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<script>
+    $("#frm_nuevo_vocativo").validate({
+        rules: {
+            apellido_voc: {
+                required: true,
+                minlength: 3,
+                maxlength: 500
+            },
+            nombre_voc: {
+                required: true,
+                minlength: 3,
+                maxlength: 500
+            },
+            cargo_voc: {
+                required: true,
+                minlength: 3,
+                maxlength: 500
+            },
+            telefono_voc: {
+                required: true,
+                minlength: 3,
+                maxlength: 15
+            },
+            codigo_eve: {
+                required: true
+            }
+        },
+        messages: {
+            apellido_voc: {
+                required: "Por favor ingrese el apellido",
+                minlength: "El apellido debe tener al menos 3 caracteres",
+                maxlength: "Máximo 500 caracteres"
+            },
+            nombre_voc: {
+                required: "Por favor ingrese el nombre",
+                minlength: "El nombre debe tener al menos 3 caracteres",
+                maxlength: "Máximo 500 caracteres"
+            },
+            cargo_voc: {
+                required: "Por favor ingrese el cargo",
+                minlength: "El cargo debe tener al menos 3 caracteres",
+                maxlength: "Máximo 500 caracteres"
+            },
+            telefono_voc: {
+                required: "Por favor ingrese el teléfono",
+                minlength: "El teléfono debe tener al menos 3 caracteres",
+                maxlength: "Máximo 15 caracteres"
+            },
+            codigo_eve: {
+                required: "Por favor seleccione un evento"
+            }
+        }
+    });
+</script>
+{% endblock %}

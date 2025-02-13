@@ -1,0 +1,57 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Proyecto</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarProyectoForm" action="{% url 'procesarActualizacionProyecto' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_pro" value="{{ proyectoEditar.codigo_pro }}">
+                
+                <label><b>Nombre:</b></label>
+                <input type="text" name="nombre_pro" value="{{ proyectoEditar.nombre_pro }}" class="form-control" required>
+                
+                <label><b>Descripción:</b></label>
+                <input type="text" name="descripcion_pro" value="{{ proyectoEditar.descripcion_pro }}" class="form-control" required>
+                
+                <label><b>Componentes:</b></label>
+                <input type="text" name="componentes_pro" value="{{ proyectoEditar.componentes_pro }}" class="form-control" required>
+                
+                <label><b>Total Financiamiento:</b></label>
+                <input type="number" step="0.01" name="total_financiamiento_pro" value="{{ proyectoEditar.total_financiamiento_pro }}" class="form-control" required>
+                
+                <label><b>1er Cuatrimestre:</b></label>
+                <input type="number" name="primer_cuatrimestre_pro" value="{{ proyectoEditar.primer_cuatrimestre_pro }}" class="form-control" required>
+                
+                <label><b>2do Cuatrimestre:</b></label>
+                <input type="number" name="segundo_cuatrimestre_pro" value="{{ proyectoEditar.segundo_cuatrimestre_pro }}" class="form-control" required>
+                
+                <label><b>3er Cuatrimestre:</b></label>
+                <input type="number" name="tercer_cuatrimestre_pro" value="{{ proyectoEditar.tercer_cuatrimestre_pro }}" class="form-control" required>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoProyectos' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('editarProyectoForm').addEventListener('submit', function(event) {
+        let nombre = document.getElementsByName('nombre_pro')[0].value.trim();
+        let descripcion = document.getElementsByName('descripcion_pro')[0].value.trim();
+        let componentes = document.getElementsByName('componentes_pro')[0].value.trim();
+        let totalFinanciamiento = document.getElementsByName('total_financiamiento_pro')[0].value.trim();
+        let primerCuatrimestre = document.getElementsByName('primer_cuatrimestre_pro')[0].value.trim();
+        let segundoCuatrimestre = document.getElementsByName('segundo_cuatrimestre_pro')[0].value.trim();
+        let tercerCuatrimestre = document.getElementsByName('tercer_cuatrimestre_pro')[0].value.trim();
+
+        if (!nombre || !descripcion || !componentes || !totalFinanciamiento || !primerCuatrimestre || !segundoCuatrimestre || !tercerCuatrimestre) {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos antes de actualizar.');
+        }
+    });
+</script>
+{% endblock %}

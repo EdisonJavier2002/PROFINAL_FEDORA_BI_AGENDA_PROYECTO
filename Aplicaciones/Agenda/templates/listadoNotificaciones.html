@@ -1,0 +1,49 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<div class="container" style="max-width: 1500px;">
+    <div class="card">
+        <div class="card-title text-center">
+            <h3><b>Listado de Notificaciones</b></h3>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'nuevaNotificacion' %}" class="btn btn-success">Agregar Notificación</a>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-hover" id="tbl-notificaciones">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Mensaje</td>
+                    <td>Emisor</td>
+                    <td>Receptor</td>
+                    <td>Estado</td>
+                    <td>Fecha</td>
+                    <td>Evento</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notificacion in notificaciones %}
+                <tr>
+                    <td>{{ notificacion.codigo_not }}</td>
+                    <td>{{ notificacion.mensaje_not }}</td>
+                    <td>{{ notificacion.emisor_not }}</td>
+                    <td>{{ notificacion.receptor_not }}</td>
+                    <td>{{ notificacion.estado_not }}</td>
+                    <td>{{ notificacion.fecha_not }}</td>
+                    <td>{{ notificacion.codigo_eve }}</td>
+                    <td>
+                        <a href="{% url 'editarNotificacion' notificacion.codigo_not %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminarNotificacion' notificacion.codigo_not %}" onclick="return confirm('¿Estás seguro?');" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            let table = new DataTable('#tbl-notificaciones');
+        </script>
+    </div>
+</div>
+{% endblock %}

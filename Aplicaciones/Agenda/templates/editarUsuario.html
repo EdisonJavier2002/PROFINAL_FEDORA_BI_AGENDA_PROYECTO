@@ -1,0 +1,40 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br><br><br><br>
+<h4 style="text-align: center;">Editar Usuario</h4>
+<div class="container-fluid">
+    <div class="row justify-content-center"> 
+        <div class="col-md-6 col-lg-4">
+            <form id="editarUsuarioForm" action="{% url 'procesarActualizacionUsuario' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="codigo_usu" value="{{ usuarioEditar.codigo_usu }}">
+                
+                <label><b>Nombre:</b></label>
+                <input type="text" name="nombre_usu" value="{{ usuarioEditar.nombre_usu }}" class="form-control" required>
+                
+                <label><b>Email:</b></label>
+                <input type="email" name="email_usu" value="{{ usuarioEditar.email_usu }}" class="form-control" required>
+                
+                <label><b>Perfil:</b></label>
+                <input type="text" name="perfil_usu" value="{{ usuarioEditar.perfil_usu }}" class="form-control" required>
+                
+                <label><b>Estado:</b></label>
+                <select name="estado_usu" class="form-control" required>
+                    <option value="1" {% if usuarioEditar.estado_usu == 1 %}selected{% endif %}>Activo</option>
+                    <option value="0" {% if usuarioEditar.estado_usu == 0 %}selected{% endif %}>Inactivo</option>
+                </select>
+                
+                <label><b>Delegado:</b></label>
+                <select name="es_delegado" class="form-control" required>
+                    <option value="1" {% if usuarioEditar.es_delegado == 1 %}selected{% endif %}>Sí</option>
+                    <option value="0" {% if usuarioEditar.es_delegado == 0 %}selected{% endif %}>No</option>
+                </select>
+                
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <a href="{% url 'listadoUsuarios' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
